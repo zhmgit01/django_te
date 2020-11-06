@@ -1,0 +1,20 @@
+一、django的相关命令
+
+启动django服务：
+    python manage.py runserver
+
+创建子应用：
+    python manage.py startapp 应用名
+
+数据库操作：
+    python manage.py makemigrations # 告知数据库由变化
+    python manage.py migrate # 执行数据库的变化
+
+创建admin用户:
+    python manage.py createsuperuser
+    依据提示完成admin用户的设置
+
+
+
+
+* https://www.cnblogs.com/yoyoketang/p/10417479.html

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>母模版</title>
+</head>
+<body>
+
+{% include 'top.html' %}
+
+<!-- block是一个块标签，content是标签名称 -->
+{% block content %} {% endblock content %}
+
+<p>----django教程-----</p>
+
+<!-- block是一个块标签，ad是标签名称 -->
+{% block ad %}{% endblock ad %}
+
+{% include 'end.html' %}
+
+</body>
+</html>
