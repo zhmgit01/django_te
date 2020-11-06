@@ -20,7 +20,7 @@ from . import view, testdb
 from hello import views
 from django.urls import re_path, path
 
-from demo01.views import test_qq, result_qq
+from demo01.views import test_qq, result_qq, user
 
 urlpatterns = [
     path("index/", views.index),
@@ -63,5 +63,8 @@ urlpatterns = [
 
     # 访问测试qq页面
     url(r'^qq/', test_qq),
-    url(r'^result/', result_qq)
+    url(r'^result/', result_qq),
+
+    # 查询数据中的数据
+    url(r'^email/', user),
 ]

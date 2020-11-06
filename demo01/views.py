@@ -39,7 +39,11 @@ def user(request):
     res = ''
     if request.method == 'GET':
         r = request.GET.get('name', None)
-        mail = User.objects.get(user_name=r)
+        res = User.objects.get(user_name="%s" % r)
         try:
-
+            res = res[0].mail
         except:
+            res = "未查询到数据！"
+        return render(request, 'name.html', {"email": res})
+    else:
+        return render(request, 'name.html', {"email": res})
