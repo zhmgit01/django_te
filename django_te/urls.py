@@ -20,7 +20,7 @@ from . import view, testdb
 from hello import views
 from django.urls import re_path, path
 
-from demo01.views import test_qq, result_qq, user
+from demo01.views import test_qq, result_qq, user,register,login,reset_pwd
 
 urlpatterns = [
     path("index/", views.index),
@@ -61,10 +61,16 @@ urlpatterns = [
     # ----------创建admin后台的访问路径-------------
     url(r'^admin/', admin.site.urls),
 
+    # -----get请求-----
     # 访问测试qq页面
     url(r'^qq/', test_qq),
     url(r'^result/', result_qq),
 
     # 查询数据中的数据
     url(r'^email/', user),
+
+    # ------post请求---
+    url(r'user_register/',register),
+    url(r'^user_login/', login),
+    url(r'^reset/', reset_pwd),
 ]

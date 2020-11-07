@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改密码</title>
+</head>
+<body>
+
+<h1>修改密码！</h1>
+<form action="" method="post">
+    {% csrf_token %}
+    <p>
+        用户名：<input type="text" id="id_username" name="username" required="required">*
+    </p>
+    <p>
+        密码：<input type="password" id="id_psw" name="password" required="required">*
+    </p>
+    <p>
+        新密码：<input type="password" id="id_new" name="new" required="required">*
+    </p>
+    <p>{{ msg }}</p>
+    <p>
+        <input type="submit" value="确定">
+    </p>
+
+
+</form>
+
+</body>
+</html>

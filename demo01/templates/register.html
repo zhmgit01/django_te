@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册页面</title>
+</head>
+<body>
+
+<h1>新用户注册！</h1>
+<form action="" method="post">
+{#    防止跨站点伪造请求#}
+    {% csrf_token %}
+    <p>
+        用户名：<input type="text" id="id_username" name="username" required="required"> * {{ rename }}
+    </p>
+    <p>
+        密码：<input type="text" id="id_username" name="password" required="required"> *
+    </p>
+    <p>
+        注册邮箱：<input type="text" id="id_username" name="mail">
+    </p>
+    <p>
+        <input type="submit" value="注册">
+    </p>
+</form>
+
+</body>
+</html>
