@@ -39,7 +39,8 @@ def user(request):
     res = ''
     if request.method == 'GET':
         r = request.GET.get('name', None)
-        res = User.objects.get(user_name="%s" % r)
+        # filter相当于SQL中的WHERE，可设置条件过滤结果
+        res = User.objects.filter(user_name="%s" % r)
         try:
             res = res[0].mail
         except:
