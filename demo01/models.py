@@ -36,3 +36,29 @@ class CardInfo(models.Model):
 
     def __str__(self):
         return self.card_id
+
+
+# =======多对多关系表 回生成book_auth表（记录对应关系）========
+class Author(models.Model):
+    """作者"""
+    name = models.CharField(max_length=10, verbose_name='作者')
+    mail = models.CharField(max_length=20, verbose_name='邮箱')
+    city = models.CharField(max_length=30, verbose_name='城市')
+
+    class Meta:
+        verbose_name_plural = '作者'
+
+    def __str__(self):
+        return self.name
+
+
+class Book(models.Model):
+    """书籍详情"""
+    book_name = models.CharField(max_length=50, verbose_name='书名')
+    auth = models.ManyToManyField(Author, verbose_name='作者')
+
+    class Meta:
+        verbose_name_plural = '书籍详情'
+
+    def __str__(self):
+        return self.book_name
