@@ -122,3 +122,16 @@ USE_TZ = False  # 设置为False，要不然数据库时间和当前时间不一
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+"""
+发送邮件的配置信息
+
+EMAIL_USE_SSL 和 EMAIL_USE_TLS 是互斥的，只能有一个为 True
+"""
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_SSL = True        # SSL加密方式
+EMAIL_HOST = 'smtp.qq.com'   # 发送邮件的邮箱 的 SMTP服务器，这里用了163邮箱
+EMAIL_PORT = 465    # SMTP服务器端口
+EMAIL_HOST_USER = '283340479@qq.com'   # 发件人
+EMAIL_HOST_PASSWORD = '授权码'   # 密码(这里使用的是授权码)
+EMAIL_FROM = 'yoyo<283340479@qq.com>'   # 邮件显示的发件人

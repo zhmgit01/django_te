@@ -20,7 +20,7 @@ from . import view, testdb
 from hello import views
 from django.urls import re_path, path
 
-from demo01.views import test_qq, result_qq, user,register,login,reset_pwd
+from demo01.views import test_qq, result_qq, user, register, login, reset_pwd, mail, mail_html, file_html_mail
 
 urlpatterns = [
     path("index/", views.index),
@@ -73,4 +73,11 @@ urlpatterns = [
     url(r'user_register/',register),
     url(r'^user_login/', login),
     url(r'^reset/', reset_pwd),
+
+    # 发送邮件
+    url(r'send_mail/',mail),
+    # 发送html格式邮件
+    url(r'mail_html/', mail_html),
+    # 发送附件 html格式
+    url(r'file_html_mail/', file_html_mail),
 ]
