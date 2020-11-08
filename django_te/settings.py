@@ -13,7 +13,13 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+import sys
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# ===========xadmin 安装时添加=============
+sys.path.insert(0,os.path.join(BASE_DIR,'apps'))
+sys.path.insert(0,os.path.join(BASE_DIR,'extra_apps'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -37,7 +43,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',  # 管理静态文件框架
     # -----------注册app-------------
     'hello',  # 应用app
-    'demo01'
+    'demo01',
+    # ===========xadmin 安装时添加=========
+    'xadmin',
+    'crispy_forms'
 ]
 
 MIDDLEWARE = [

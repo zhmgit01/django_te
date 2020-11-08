@@ -62,3 +62,53 @@ class Book(models.Model):
 
     def __str__(self):
         return self.book_name
+
+
+# ==========一对一关系============
+class Card(models.Model):
+    """银行卡，基本信息"""
+    card_id = models.CharField(max_length=30, verbose_name='卡号', default='')
+    card_user = models.CharField(max_length=10, verbose_name="姓名", default="")
+    add_time = models.DateField(auto_now=True, verbose_name="添加时间")
+
+    class Meta:
+        verbose_name_plural = '银行卡帐户'
+        verbose_name = '银行卡帐户_基本信息'
+
+    def __str__(self):
+        return self.card_id
+
+
+class CardDetail(models.Model):
+    """银行卡 详细信息"""
+
+    # OneToOneField里面有两个参数必填，
+    # 第一个参数传关联的表名称，
+    # 第二个参数on_delete=models.CASCADE（对象删除后，包含OneToOneField的字段也会被删除）
+    card = models.OneToOneField(Card,
+                                on_delete=models.CASCADE,
+                                verbose_name='卡号')
+    tel = models.CharField(max_length=30, verbose_name='电话', default='')
+    mail = models.CharField(max_length=30, verbose_name='邮箱', default='')
+    city = models.CharField(max_length=10, verbose_name='城市', default='')
+    address = models.CharField(max_length=30, verbose_name='详细地址', default='')
+
+    class Meta:
+        verbose_name_plural = '个人资料'
+        verbose_name = '帐户_个人资料'
+
+    def __str__(self):
+        return self.card.card_id
+
+
+# 使用 xadmin
+class Student(models.Model):
+    '''学生成绩'''
+    student_id = models.CharField(max_length=30, verbose_name="学号")
+    name = models.CharField(max_length=30, verbose_name="姓名")
+    age = models.IntegerField(verbose_name="年龄")
+    score = models.IntegerField(verbose_name="分数")
+
+    class Meta:
+        verbose_name = "学生成绩"
+        verbose_name_plural = verbose_name

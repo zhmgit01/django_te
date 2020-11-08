@@ -14,6 +14,9 @@
     python manage.py createsuperuser
     依据提示完成admin用户的设置
 
+xadmin 安装：
+    https://github.com/sshwsfc/xadmin,
+
 
 
 

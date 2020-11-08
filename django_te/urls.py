@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
+import xadmin
 from . import view, testdb
 from hello import views
 from django.urls import re_path, path
@@ -60,6 +61,9 @@ urlpatterns = [
 
     # ----------创建admin后台的访问路径-------------
     url(r'^admin/', admin.site.urls),
+
+    # ===========xadmin 的访问=========
+    url(r'^xadmin/', xadmin.site.urls),
 
     # -----get请求-----
     # 访问测试qq页面
