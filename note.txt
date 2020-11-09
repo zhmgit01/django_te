@@ -17,7 +17,9 @@
 xadmin 安装：
     https://github.com/sshwsfc/xadmin,
 
+crispy_forms
+    是基于django-uni-form这个框架开发的，专门用于详情页面的布局设计，完美的支持Bootstrap前端框架。
+    它的设计理念是Forms have never been this crispy
 
 
-
-* https://www.cnblogs.com/yoyoketang/p/10476989.html
+* https://www.cnblogs.com/yoyoketang/p/10553890.html

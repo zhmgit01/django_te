@@ -50,7 +50,7 @@ xadmin.site.register(Card, ControlCard)
 
 xadmin.site.register(Teacher, ControlTeacher)
 
-from xadmin.layout import Main, TabHolder, Fieldset, Row, Col, AppendedText, Side, Field
+from xadmin.layout import Main, TabHolder, Fieldset, Row, Col, AppendedText, Side, Field, Tab
 
 
 class MoreActicl(object):
@@ -73,6 +73,17 @@ class MoreActicl(object):
                  Row('detail'),
                  css_class='unsort no_title'  # no_title是不显示区块的title名称
                  ),
+        TabHolder(
+            Tab('body-raw',
+                Field('title', css_class="extra"),  # css_class="extra"可以将输入框占一整行
+                Field('body'),
+                css_class='unsort'
+                ),
+            Tab('body-json',
+                Field('body', )
+                ),
+            css_class='unsort',
+        )
     )
 
 
