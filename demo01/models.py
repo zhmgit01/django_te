@@ -64,12 +64,90 @@ class Book(models.Model):
         return self.book_name
 
 
+"""
+增加测试数据：
+D:\web_djo\helloworld>python manage.py shell
+
+>>> from hello.models import Card, BankName
+>>> a = BankName.objects.create(bank_name='上海银行', city='上海', point='徐家汇区')
+>>> a.save
+>>> c = Card.objects.create(card_id='62270121022100000', card_user='张三', bank_info=a)
+>>> c.save
+
+================================================================
+正向查询：根据Card表的card_id，去查询关联的对应的BankName相关信息
+>>> from hello.models import BankName, Card
+>>> cardxx=Card.objects.get(card_id='62270121022100000')
+>>> cardxx.card_user
+'张三'
+>>> cardxx.bank_info
+<BankName: 上海银行>
+>>> cardxx.bank_info.bank_name
+'上海银行'
+>>> cardxx.bank_info.city
+'上海'
+>>>
+
+===============================================================
+反向查询_set：
+如果想通过银行名称“上海银行”，查询到此银行关联多少张卡，并且查询其中一个银行卡的信息。
+反向查询，当ForeignKey没设置related_name参数，默认是通过关联表的名称加_set去查询
+查询结果是QuerySet集合对象
+count()函数统计查询个数
+[0].card_id 下标取值，获取对应属性
+
+>>> bank = BankName.objects.get(bank_name='上海银行')
+>>> bank.city
+'上海'
+# 反向查询，表名称_set
+>>> bank.card_set.all()
+<QuerySet [<Card: 62270121022100000>]>
+# count()函数统计
+>>> bank.card_set.all().count()
+1
+>>> bank.card_set.all()[0].card_id
+'62270121022100000'
+>>>
+"""
+
+
+class BankName(models.Model):
+    """银行信息"""
+    bank_name = models.CharField(max_length=50, verbose_name='银行名称', default='')
+    city = models.CharField(max_length=30, verbose_name='城市', default='')
+    point = models.CharField(max_length=60, verbose_name='网点', default='')
+
+    class Meta:
+        verbose_name = '银行'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.bank_name
+
+
+class CardGrade(models.Model):
+    '''会员等级'''
+    nub = models.CharField(max_length=50, verbose_name="会员等级", default="")
+
+    class Meta:
+        verbose_name = '会员等级'
+        verbose_name_plural = verbose_name
+
+
 # ==========一对一关系============
 class Card(models.Model):
     """银行卡，基本信息"""
     card_id = models.CharField(max_length=30, verbose_name='卡号', default='')
     card_user = models.CharField(max_length=10, verbose_name="姓名", default="")
     add_time = models.DateField(auto_now=True, verbose_name="添加时间")
+    bank_info = models.ForeignKey(BankName,
+                                  related_name='card_bank',  # related_name参数相当于给这个外键取了个别名，方便多个外键时候去识别
+                                  on_delete=models.CASCADE,
+                                  default='')
+    grade = models.ForeignKey(CardGrade,
+                              related_name='card_grade',
+                              on_delete=models.CASCADE,
+                              default='')
 
     class Meta:
         verbose_name_plural = '银行卡帐户'
