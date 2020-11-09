@@ -21,5 +21,86 @@ crispy_forms
     是基于django-uni-form这个框架开发的，专门用于详情页面的布局设计，完美的支持Bootstrap前端框架。
     它的设计理念是Forms have never been this crispy
 
+auth模块：
+    当我们执行makemigrations和migrate数据库迁移的时候，会自动新增一个auth_user表，用户存放用户账号密码等相关信息。
+    创建超级管理员用户python manage.py createsuperuser的时候，会在表里面写入管理员的账号、密码、邮箱等相关信息,
+认证：authenticate()若有效则返回代表该用户的user对象, 若无效则返回None
+    >>> from django.contrib.auth.models import User
+    >>> from django.contrib.auth import authenticate
+
+    # 输入正确账号，密码，user返回root用户对象
+    >>> user=authenticate(username='root',password='root')
+    >>> user
+    <User: root>
+
+    # 输入错误的密码，user返回为空
+    >>> user=authenticate(username='root',password='xxxx')
+    >>> user
+    >>>
+
+注册 create_user
+    >>> from django.contrib.auth.models import User
+    >>> from django.contrib.auth import authenticate
+
+    # 新增用户test.密码test
+    >>> user1=User.objects.create_user(username='test',password='test',email='283340479@qq.com')
+    >>> user1.save()    # save保存后，数据库查看auth_user表新增成功
+    >>>
+
+修改密码 set_password
+    >>> from django.contrib.auth.models import User
+    >>> from django.contrib.auth import authenticate
+    >>> user=authenticate(username='test',password='test')
+
+    # 设置新密码
+    >>> user.set_password('123456')
+    >>> user.save()
+
+    # 修改成功后使用新密码登陆
+    >>> user=authenticate(username='test',password='test')
+    >>> user.set_password('123456')
+当密码错误的时候，user返回为空，使用user.set_password('123456')会直接抛异常，所以修改密码的时候，一般先判断下
+    >>> user=authenticate(username='test',password='test')
+    # 密码不对，user为空抛异常
+    >>> user.set_password('123456')
+    Traceback (most recent call last):
+      File "<console>", line 1, in <module>
+    AttributeError: 'NoneType' object has no attribute 'set_password'
+
+    # 加判断
+    >>> user=authenticate(username='test',password='test')
+    >>> user
+    >>> if user is not None:
+    ...         user.set_password('123456')
+    ...         user.save()
+    ...
+    >>>
+
+登录 login
+    from django.contrib.auth import login, authenticate
+
+    def login_view(request):
+        """session登陆"""
+        user = authenticate(username='test', password='test')
+        if user is not None:
+            if user.is_active:  # is_active是判断用户是否可以用
+                # 当它为is_active的时候(True),用户可以正常登陆，当is_active为0(False),用户不可用，相当于拉入黑名单
+                login(request, user)
+
+退出登录：logout会清除request中的user信息, 并刷新session
+    from django.contrib.auth import logout
+
+    def logout_view(request):
+        '''退出登陆'''
+        logout(request)
+
+
+
+
+
+
+
+
+
 
 * https://www.cnblogs.com/yoyoketang/p/10553890.html
