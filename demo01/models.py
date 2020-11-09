@@ -203,6 +203,15 @@ class Student(models.Model):
     # 多对多
     teachers = models.ManyToManyField(Teacher, verbose_name='老师')
 
+    gender_choices = (
+        (u'M',u'男'),
+        (u'F',u'女'),
+    )
+    gender = models.CharField(max_length=10,
+                              choices=gender_choices,
+                              verbose_name='性别',
+                              default='')
+
     class Meta:
         verbose_name = "学生"
         verbose_name_plural = verbose_name
@@ -281,3 +290,45 @@ class Student(models.Model):
 '张三'
 >>>
 """
+
+
+# xadmin详情页面布局 form_layout
+class ArticleClassify(models.Model):
+    '''文章分类'''
+    n = models.CharField(max_length=30, verbose_name="分类", default="")
+
+    def __str__(self):
+        return self.__doc__ + "->" + self.n
+
+    class Meta:
+        verbose_name = "文章分类"
+        verbose_name_plural = verbose_name
+
+
+class ArticleDetail(models.Model):
+    '''文章'''
+    title = models.CharField(max_length=30, verbose_name="标题", default="输入你的标题")  # 标题
+    classify = models.ForeignKey(ArticleClassify,
+                                 on_delete=models.CASCADE,
+                                 related_name="classify_name",
+                                 verbose_name="文章分类",
+                                 )
+
+    body = models.TextField(verbose_name="正文", default="输入正文")  # 正文
+    auth = models.CharField(max_length=10, verbose_name="作者", default="admin",
+                            blank=True,null=True # 如何想设置非必填字段
+                            )  # 作者
+
+    detail = models.TextField(verbose_name="备注", default="添加备注")
+
+    # 创建时间
+    create_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
+    # 最后更新时间
+    update_time = models.DateTimeField(auto_now=True, verbose_name="最后更新时间")
+
+    def __str__(self):
+        return self.__doc__ + "title->" + self.title
+
+    class Meta:
+        verbose_name = "文章列表"
+        verbose_name_plural = '文章列表'

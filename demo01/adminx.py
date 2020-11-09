@@ -1,5 +1,5 @@
 import xadmin
-from .models import Student, Card, CardDetail, Teacher
+from .models import Student, Card, CardDetail, Teacher, ArticleDetail
 
 
 class ControlStudent(object):
@@ -38,10 +38,42 @@ class ControlTeacher(object):
     list_display = ['teacher_name', 'tel', 'mail']
 
 
+class ControlActicl(object):
+    list_display = ['title', 'body', 'auth']
+
+
 # 注册Student表
 xadmin.site.register(Student, ControlStudent)
 
 # 注册card表，关联CardDetail
 xadmin.site.register(Card, ControlCard)
 
-xadmin.site.register(Teacher,ControlTeacher)
+xadmin.site.register(Teacher, ControlTeacher)
+
+from xadmin.layout import Main, TabHolder, Fieldset, Row, Col, AppendedText, Side, Field
+
+
+class MoreActicl(object):
+    list_display = ['title', 'body', 'auth']
+
+    readonly_fields = ['detail']  # 只读字段
+
+    exclude = ['auth']  # 不显示某个字段
+
+    form_layout = (
+        Fieldset(u'',
+                 Row('title', 'auth'),  # Row表示将里面的字段作为一行显示
+                 Row('classify'),
+                 css_class='unsort'  # 不让区块拖动
+                 ),
+        Fieldset(('正文内容'),  # Fieldset第一个参数表示区块名称
+                 'body',
+                 ),
+        Fieldset(('备注'),
+                 Row('detail'),
+                 css_class='unsort no_title'  # no_title是不显示区块的title名称
+                 ),
+    )
+
+
+xadmin.site.register(ArticleDetail, MoreActicl)
