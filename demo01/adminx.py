@@ -17,10 +17,18 @@ class MoreInfo(object):
 
 
 class ControlCard(object):
-    list_display = ["card_id", "card_user", "add_time"]
+    # 定义关联函数查询关联字段，显示在列表中
+    list_display = ["card_id", "card_user", 'telphone', 'city', "add_time"]
 
     # 在Card页面显示更多信息CardDetail
     inlines = [MoreInfo]
+
+    # 查询关联表的tel字段
+    def telphone(self, obj):
+        return obj.carddetail.tel
+
+    def city(self, obj):
+        return obj.carddetail.city
 
 
 # 注册Student表
