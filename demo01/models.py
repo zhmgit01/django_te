@@ -179,14 +179,105 @@ class CardDetail(models.Model):
         return self.card.card_id
 
 
+class Teacher(models.Model):
+    """老师表"""
+    teacher_name = models.CharField(max_length=30, verbose_name='老师', default='')
+    tel = models.CharField(max_length=30, verbose_name='电话', default='')
+    mail = models.CharField(max_length=30, verbose_name='邮件', default='')
+
+    class Meta:
+        verbose_name = '老师'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.teacher_name
+
+
 # 使用 xadmin
 class Student(models.Model):
     '''学生成绩'''
-    student_id = models.CharField(max_length=30, verbose_name="学号")
-    name = models.CharField(max_length=30, verbose_name="姓名")
-    age = models.IntegerField(verbose_name="年龄")
-    score = models.IntegerField(verbose_name="分数")
+    student_id = models.CharField(max_length=30, verbose_name="学号", default='')
+    name = models.CharField(max_length=30, verbose_name="姓名", default='')
+    age = models.IntegerField(verbose_name="年龄", default='')
+    score = models.IntegerField(verbose_name="分数", default='')
+    # 多对多
+    teachers = models.ManyToManyField(Teacher, verbose_name='老师')
 
     class Meta:
-        verbose_name = "学生成绩"
+        verbose_name = "学生"
         verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.name
+
+
+"""
+=================================================
+多对多表的数据新增：
+
+>>> from hello.models import Teacher, Student
+>>> t1=Teacher.objects.create(teacher_name='刘老师',tel='155300001111',mail='1000@qq.com')
+>>> t1.save()
+>>> t1
+<Teacher: Teacher object (1)>
+>>> t2=Teacher.objects.create(teacher_name='万老师',tel='155300001112',mail='1001@qq.com')
+>>> t2.save()
+>>> t2
+<Teacher: Teacher object (2)>
+>>> s1=Student.objects.create(student_id='11002200',name='张三',age=19)
+>>> s1.save()
+
+# 方法一：添加id
+# 可以添加Teacher对应的id
+>>> s1.teachers.add(1)
+# 也可以添加多个id，逗号隔开
+>>> s1.teachers.add(1,2)
+# 如果添加的是传一个可迭代对象(list或tupule),可以用*分开传入这种方法
+>>> s1.teachers.add(*[1,2])
+
+# 方法二、直接添加对象
+>>> s1.teachers.add(t1)
+>>> s1.teachers.add(t2)
+>>> s1.teachers.add(t1,t2)
+
+# 也可以先查询需要添加的对象
+>>> ob=Teacher.objects.get(teacher_name='刘老师')
+>>> ob
+<Teacher: Teacher object (1)>
+>>> s2=Student.objects.create(student_id='11002201',name='李四',age=19)
+>>> s2.teachers.add(ob)
+
+==============================================
+正向查询：通过student 表对象查询对应的teacher
+>>> from hello.models import Teacher, Student
+>>> stu=Student.objects.filter(name='李四').first()
+>>> stu
+<Student: Student object (2)>
+>>> stu.student_id
+'11002201'
+
+# 正向查询
+>>> stu.teachers.all()
+<QuerySet [<Teacher: Teacher object (1)>]>
+
+>>> stu.teachers.all()[0].teacher_name
+'刘老师'
+>>> stu.teachers.all()[0].tel
+'155300001111'
+
+===========================================
+反向查询_set:通过老师名称，查询对应关联的学生，反向查询的时候在关联表名称后面加_set
+    如果设置 related_name参数使用对应的名称查询
+>>> tea=Teacher.objects.filter(teacher_name='刘老师').first()
+>>> tea
+<Teacher: Teacher object (1)>
+>>> tea.tel
+'155300001111'
+
+# 反向查询
+>>> tea.student_set.all()
+<QuerySet [<Student: Student object (1)>, <Student: Student object (2)>]>
+>>> tea.student_set.all()[0].name
+'张三'
+>>>
+"""
