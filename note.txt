@@ -94,7 +94,8 @@ auth模块：
         '''退出登陆'''
         logout(request)
 
-
+django_session表中存放session相关的信息
+    session_key(键), session_data(值),expire_date(过期时间)
 
 
 

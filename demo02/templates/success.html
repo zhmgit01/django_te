@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改密码</title>
+</head>
+<body>
+     <div style="margin: 15% 40%;">
+        <h1>登录成功！</h1><br><br>
+         <h2>
+             <a href="/xadmin/">进主页更多功能</a>
+         </h2>
+
+         <a href="/logoutview/">
+             <i class="show-sm fa fa-sign-out"></i>
+             <span class="hide-sm">注销</span>
+         </a>
+
+         <form action="/success/" method="post">
+           {% csrf_token %}
+            <p>
+                <label for="id_psw">原始密码：</label>
+                <input type="text" id="id_psw" name="psw" placeholder="原密码" autofocus required />
+            </p>
+            <p>
+                <label for="id_new">新密码：</label>
+                <input type="password" id="id_new" placeholder="新密码" name="psw_new" required >
+            </p>
+             <p>
+                <label for="id_re">确认新密码：</label>
+                <input type="password" id="id_re" placeholder="重复新密码" name="psw_re" required >
+            </p>
+            <input type="submit" value="确定">
+             <p style="color:red">
+                {{msg}}
+            </p>
+            <a href="/loginview">登录</a>
+         </form>
+         <br><br>
+    </div>
+</body>
+</html>

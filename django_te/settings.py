@@ -38,12 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.admin',  # 管理站点
     'django.contrib.auth',  # 认证系统
     'django.contrib.contenttypes',  # 用于内容类型的框架
-    'django.contrib.sessions',  # 会话框架
+    'django.contrib.sessions',  # 会话框架，默认启用 session应用
     'django.contrib.messages',  # 消息框架
     'django.contrib.staticfiles',  # 管理静态文件框架
     # -----------注册app-------------
     'hello',  # 应用app
     'demo01',
+    'demo02',
     # ===========xadmin 安装时添加=========
     'xadmin',
     'crispy_forms'
@@ -51,7 +52,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware', # 默认启用session中间层
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
